@@ -14,7 +14,7 @@ subtest 'project URLs' => sub {
 	my @urls;
 	for(qw{
 		jquery-placeholder-plugin
-		jquery-placeholder-plugin
+		jquery-email-address-munging-plugin
 	}){
 		push @urls, "$base/$_";
 	}
@@ -28,7 +28,8 @@ subtest 'Test from pre 2014-07 sitemap' => sub {
 	my @urls = $map->urls->all;
 
 	for my $url(@urls){
-		test_url($url->loc->as_string);
+		my $u = $url->loc->as_string;
+		test_url($u);
 	}
 };
 
@@ -92,20 +93,7 @@ subtest 'arjones.co.uk' => sub {
 		/3
 	}){
 		# TODO: test other short URLs?
-		push @urls, "$base/$_";
-	}
-	test_urls(@urls);
-};
-
-subtest 'ci.arjones.co.uk' => sub {
-	#plan skip_all => 'for now';
-	my $base = 'http://ci.arjones.co.uk';
-	my @urls;
-	for(qw{
-		/
-		/builders/gcal
-	}){
-		push @urls, "$base/$_";
+		push @urls, $base . $_;
 	}
 	test_urls(@urls);
 };
